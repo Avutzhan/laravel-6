@@ -52,8 +52,8 @@
                 <div class="responsive"><i data-icon="m" class="ion-navicon-round"></i></div>
 
                 <ul class="nav-menu list-unstyled">
-                    <li><a href="#header" class="smoothScroll">Home</a></li>
-                    <li><a href="/about" class="smoothScroll">About</a></li>
+                    <li><a href="#header" class="smoothScroll" {{ Request::path() === '/' ? 'style=color:black' : ' ' }}>Home</a></li>
+                    <li><a href="/about" class="smoothScroll" {{ Request::path() === 'about' ? 'style=color:black' : ' ' }}>About</a></li>
                     <li><a href="#portfolio" class="smoothScroll">Portfolio</a></li>
                     <li><a href="#journal" class="smoothScroll">Blog</a></li>
                     <li><a href="#contact" class="smoothScroll">Contact</a></li>
