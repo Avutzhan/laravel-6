@@ -1,5 +1,6 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
+use App\Article;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +18,8 @@ Route::get('/', function() {
 });
 Route::get('/about', function() {
     return view('about', [
-        'article' => App\Article::take(2)->latest()->get()
+        'articles' => Article::take(2)->latest()->get()
     ]);
 });
+Route::get('/articles/{article}', 'ArticlesController@show');
+Route::get('/articles', 'ArticlesController@index');
