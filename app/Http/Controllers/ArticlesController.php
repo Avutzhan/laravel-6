@@ -18,6 +18,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
+        //render a list of resource
         $articles = Article::latest()->get();
 
         return view('articles.index', ['articles' => $articles]);
@@ -29,8 +30,35 @@ class ArticlesController extends Controller
      */
     public function show($id)
     {
+        //show a single resource
         $article = Article::find($id);
 
         return view('articles.show', ['article' => $article]);
     }
+
+    public function create()
+    {
+        //shows a view to create new resource
+    }
+
+    public function store()
+    {
+        //persist new resource
+    }
+
+    public function edit()
+    {
+        //show a view to edit an existing esource
+    }
+
+    public function update()
+    {
+        //persist the edited resource
+    }
+
+    public function destroy()
+    {
+        //delete resource
+    }
+
 }
