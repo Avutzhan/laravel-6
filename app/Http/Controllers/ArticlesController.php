@@ -39,11 +39,21 @@ class ArticlesController extends Controller
     public function create()
     {
         //shows a view to create new resource
+        return view('articles.create');
     }
 
     public function store()
     {
         //persist new resource
+        $article = new Article();
+
+        $article->title = request('title');
+        $article->excerpt = request('excerpt');
+        $article->body = request('body');
+
+        $article->save();
+
+        return redirect('/articles');
     }
 
     public function edit()

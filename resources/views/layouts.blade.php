@@ -31,6 +31,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="/images/favicon.png">
 
+    @yield('head')
     <!-- =======================================================
       Theme Name: Folio
       Theme URL: https://bootstrapmade.com/folio-bootstrap-portfolio-template/
