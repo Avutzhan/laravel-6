@@ -44,6 +44,11 @@ class ArticlesController extends Controller
 
     public function store()
     {
+        request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required',
+        ]);
         //persist new resource
         $article = new Article();
 
@@ -56,13 +61,31 @@ class ArticlesController extends Controller
         return redirect('/articles');
     }
 
-    public function edit()
+    public function edit($id)
     {
-        //show a view to edit an existing esource
+        //find the article associated with the id
+        $article = Article::find($id);
+        //show a view to edit an existing resource
+        //return view('articles.edit', ['article' => $article]);
+        //better way is compact
+        return view('articles.edit', compact('article'));
     }
 
-    public function update()
+    public function update($id)
     {
+        request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required',
+        ]);
+        
+        $article = Article::find($id);
+        $article->title = request('title');
+        $article->excerpt = request('excerpt');
+        $article->body = request('body');
+        $article->save();
+
+        return redirect('/articles/' . $article->id);
         //persist the edited resource
     }
 
