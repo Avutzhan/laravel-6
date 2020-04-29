@@ -78,7 +78,7 @@ class ArticlesController extends Controller
             'excerpt' => 'required',
             'body' => 'required',
         ]);
-        
+
         $article = Article::find($id);
         $article->title = request('title');
         $article->excerpt = request('excerpt');
