@@ -28,10 +28,10 @@ class ArticlesController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Article $article)
     {
         //show a single resource
-        $article = Article::find($id);
+//        $article = Article::findOrFail($id);
 
         return view('articles.show', ['article' => $article]);
     }
@@ -61,17 +61,17 @@ class ArticlesController extends Controller
         return redirect('/articles');
     }
 
-    public function edit($id)
+    public function edit(Article $article)
     {
         //find the article associated with the id
-        $article = Article::find($id);
+        //$article = Article::findOrFail($id);
         //show a view to edit an existing resource
         //return view('articles.edit', ['article' => $article]);
         //better way is compact
         return view('articles.edit', compact('article'));
     }
 
-    public function update($id)
+    public function update(Article $article)
     {
         request()->validate([
             'title' => 'required',
@@ -79,7 +79,7 @@ class ArticlesController extends Controller
             'body' => 'required',
         ]);
 
-        $article = Article::find($id);
+        //$article = Article::findOrFail($id);
         $article->title = request('title');
         $article->excerpt = request('excerpt');
         $article->body = request('body');
