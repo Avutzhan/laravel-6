@@ -63,7 +63,7 @@ class ArticlesController extends Controller
 //
 //        ]);
 
-        return redirect('/articles');
+        return redirect(route('articles.index'));
     }
 
     public function edit(Article $article)
@@ -80,7 +80,7 @@ class ArticlesController extends Controller
     {
         $article->update($this->validateArticle());
 
-        return redirect('/articles/' . $article->id);
+        return redirect($article->path());
         //persist the edited resource
     }
 

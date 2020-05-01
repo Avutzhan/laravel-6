@@ -8,4 +8,9 @@ class Article extends Model
 {
 //    protected $fillable = ['title', 'excerpt', 'body']; reverse of this
     protected $guarded = [];
+
+    public function path()
+    {
+        return route('articles.show', $this);
+    }
 }
