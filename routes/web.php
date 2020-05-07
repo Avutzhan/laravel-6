@@ -14,6 +14,16 @@ use App\Article;
 
 Route::get('/posts/{post}', 'PostsController@show');
 Route::get('/', function() {
+    $user = App\User::first();
+
+    $post = $user->posts()->create([
+        'title' => 'foo',
+        'body' => 'lorem ipsum',
+        'slug' => 'lorem'
+    ]);
+
+    $post->tags()->attach(1);
+
     return view('welcome');
 });
 Route::get('/about', function() {
