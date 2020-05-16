@@ -33,5 +33,6 @@ $factory->define(User::class, function (Faker $faker) {
 
 //php artisan tinker
 //factory(App\User::class)->create();
+//factory(App\User::class, 5)->create();
 //how to create a factory
 //php artisan make:factory PostFactory -m Post
