@@ -11,6 +11,11 @@ class Tag extends Model
         //many to many
         return $this->belongsToMany(Post::class)->withTimestamps();
     }
+
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class);
+    }
 }
 
 //this is used just by many to many

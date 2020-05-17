@@ -18,6 +18,18 @@ class CreateTagsTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        Schema::create('article_tag', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('article_id');
+            $table->unsignedBigInteger('tag_id');
+            $table->timestamps();
+
+            $table->unique(['article_id', 'tag_id']);
+
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+        });
     }
 
     /**
