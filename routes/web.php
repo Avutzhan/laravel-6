@@ -18,11 +18,10 @@ Route::get('/', function() {
 
     $post = $user->posts()->create([
         'title' => 'foo',
-        'body' => 'lorem ipsum',
-        'slug' => 'lorem'
+        'body' => 'lorem ipsum'
     ]);
 
-    $post->tags()->attach(1);
+
 
     return view('welcome');
 });

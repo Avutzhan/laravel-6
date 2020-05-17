@@ -8,6 +8,7 @@ class Post extends Model
 {
     use Likeable;
 
+    protected $guarded = [];
     //так как все методы повторялись в нескольких местах мы воткнули их в трейты и подключаем куда надо
 
 
