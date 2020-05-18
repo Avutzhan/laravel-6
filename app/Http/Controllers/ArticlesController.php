@@ -45,13 +45,33 @@ class ArticlesController extends Controller
     public function create()
     {
         //shows a view to create new resource
-        return view('articles.create');
+        return view('articles.create', [
+            'tags' => Tag::all()
+        ]);
     }
 
     public function store()
     {
+//        dd(request()->all());
         //3 variant better way
-        Article::create($this->validateArticle());
+//        Article::create($this->validateArticle());
+        //4 метод
+        //Article::create($this->validateArticle());
+        $this->validateArticle();
+
+        $article = new Article(request(['title', 'excerpt', 'body']));
+        $article->user_id = 1; //auth()->id()
+        $article->save();
+        $article->tags()->attach(request('tags'));
+
+        // in tinker
+        //$article->tags()->attach(1);
+        //$article->tags()->attach([2, 3]);
+        //$article->tags()->detach(1);
+        //$tag = App\Tag::find(1);
+        //$article->tags()->attach($tag);
+        //$tags = App\Tag::findMany([1, 2]);
+        //$article->tags()->attach($tags);
         //2 variant
 //        $validate = request()->validate([
 //            'title' => 'required',
@@ -101,6 +121,7 @@ class ArticlesController extends Controller
             'title' => 'required',
             'excerpt' => 'required',
             'body' => 'required',
+            'tags' => 'exists:tags,id'
         ]);
     }
 
