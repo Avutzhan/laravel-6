@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row justify-content-between">
 
-                @foreach($articles as $article)
+                @forelse($articles as $article)
                     <div class="col-lg-7">
                         <div class="about-descr">
 
@@ -19,7 +19,9 @@
                         </div>
 
                     </div>
-                @endforeach
+                @empty
+                    <p> No relevant articles yet </p>
+                @endforelse
             </div>
         </div>
     </div>
