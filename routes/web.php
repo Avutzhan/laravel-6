@@ -60,3 +60,8 @@ Route::delete('/articles/{article}', 'ArticlesController@delete');
 //GET /videos/subscribe
 //PUT /videos/subscription create
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')
+    ->name('home')->middleware('auth');

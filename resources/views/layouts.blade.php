@@ -71,6 +71,23 @@
         <div class="container">
             <div class="header-content">
                 <h1>I'm <span class="typed"></span></h1>
+                <p>
+{{--                    @auth--}}
+{{--                        {{ auth()->user()->name }}--}}
+{{--                    @else--}}
+{{--                        Not logged in--}}
+{{--                    @endauth--}}
+
+                    @guest
+                        Please sign in
+                    @endguest
+
+{{--                        @if(Auth::check())--}}
+{{--                            {{ auth()->user()->name }}--}}
+{{--                        @else--}}
+{{--                            Not logged in--}}
+{{--                        @endif--}}
+                </p>
                 <p>designer, developeur, photographer</p>
 
                 <ul class="list-unstyled list-social">
