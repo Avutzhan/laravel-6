@@ -58,6 +58,7 @@
                     <li><a href="/articles" class="smoothScroll" {{ Request::path() === 'articles' ? 'style=color:black' : ' ' }}>Articles</a></li>
                     <li><a href="#journal" class="smoothScroll">Blog</a></li>
                     <li><a href="#contact" class="smoothScroll">Contact</a></li>
+                    <li><a href="/home" class="smoothScroll" {{ Request::path() === 'home' ? 'style=color:black' : ' ' }}>Login</a></li>
                 </ul>
 
             </div>
