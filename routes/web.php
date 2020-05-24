@@ -14,17 +14,7 @@ use App\Article;
 
 Route::get('/posts/{post}', 'PostsController@show');
 Route::get('/', function() {
-    $container = new \App\Container();
-
-    $container->bind('example', function() {
-        return new \App\Example();
-    });
-
-    $example = $container->resolve('example');
-
-    $example->go();
-
-//    ddd($example);
+    
 });
 //Route::get('/', function() {
 //    $user = App\User::first();
