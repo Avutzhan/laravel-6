@@ -14,17 +14,30 @@ use App\Article;
 
 Route::get('/posts/{post}', 'PostsController@show');
 Route::get('/', function() {
-    $user = App\User::first();
+    $container = new \App\Container();
 
-    $post = $user->posts()->create([
-        'title' => 'foo',
-        'body' => 'lorem ipsum'
-    ]);
+    $container->bind('example', function() {
+        return new \App\Example();
+    });
 
+    $example = $container->resolve('example');
 
+    $example->go();
 
-    return view('welcome');
+//    ddd($example);
 });
+//Route::get('/', function() {
+//    $user = App\User::first();
+//
+//    $post = $user->posts()->create([
+//        'title' => 'foo',
+//        'body' => 'lorem ipsum'
+//    ]);
+//
+//
+//
+//    return view('welcome');
+//});
 Route::get('/about', function() {
     return view('about', [
         'articles' => Article::take(2)->latest()->get()
