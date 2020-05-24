@@ -61,6 +61,15 @@ Route::delete('/articles/{article}', 'ArticlesController@delete');
 //PUT /videos/subscription create
 
 
+//CSRF attacked route
+Route::get('/logout', function () {
+    auth()->logout();
+
+    return 'You are now logged out';
+});
+
+//<img src="http://laravel-6.local/logout" alt=""> attacker
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')

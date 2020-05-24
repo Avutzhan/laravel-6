@@ -73,15 +73,15 @@
             <div class="header-content">
                 <h1>I'm <span class="typed"></span></h1>
                 <p>
-{{--                    @auth--}}
-{{--                        {{ auth()->user()->name }}--}}
-{{--                    @else--}}
-{{--                        Not logged in--}}
-{{--                    @endauth--}}
+                    @auth
+                        {{ auth()->user()->name }}
+                    @else
+                        Not logged in
+                    @endauth
 
-                    @guest
-                        Please sign in
-                    @endguest
+{{--                    @guest--}}
+{{--                        Please sign in--}}
+{{--                    @endguest--}}
 
 {{--                        @if(Auth::check())--}}
 {{--                            {{ auth()->user()->name }}--}}
