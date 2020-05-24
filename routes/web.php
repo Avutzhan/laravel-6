@@ -11,11 +11,24 @@ use App\Article;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//app()->bind('example', function( ) {
+//
+//    return new \App\Example();
+//});
+//app()->bind('App\Example', function( ) {
+//    $container = new \App\Container();
+//    $foo = 'foobar';
+//
+//    return new \App\Example($container, $foo);
+//}); это все переносим в папку провадерс апп сервис провайдер
 Route::get('/posts/{post}', 'PostsController@show');
-Route::get('/', function() {
-
-});
+Route::get('/', 'FruitController@index');
+//Route::get('/', function(App\Example $example) {
+////    $test = resolve(App\Example::class);
+////    $test = app()->make(App\Example::class);
+//// две вышестоящие команды это ручное вытягивание класса но можно запихать класс в аргументы функции и ларка сама все это пропишет и вытянет
+//    ddd($example);
+//});
 //Route::get('/', function() {
 //    $user = App\User::first();
 //

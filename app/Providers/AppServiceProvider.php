@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Container;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +15,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+//        app()->bind('App\Example', function( ) { or
+//        $this->app->bind('App\Example', function( ) { every time new instance
+        //singleton every time exact same instance
+        $this->app->singleton('App\Example', function( ) {
+            $container = new Container();
+            $foo = 'foobar';
+
+            return new \App\Example($container, $foo);
+        });
     }
 
     /**

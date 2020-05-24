@@ -6,8 +6,13 @@ namespace App;
 
 class Example
 {
-    public function go()
+    protected $container;
+
+    protected $foo;
+
+    public function __construct(Container $container, $foo)
     {
-        dump('it works');
+        $this->container = $container;
+        $this->foo = $foo;
     }
 }
