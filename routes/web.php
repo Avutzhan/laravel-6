@@ -69,6 +69,10 @@ Route::get('/logout', function () {
 });
 
 //<img src="http://laravel-6.local/logout" alt=""> attacker
+//<form action="http://laravel-6.local/logout" method="POST">
+//        <button>Continue</button>
+//    </form>
+//form will return 419 page because laravel protects csrf attacks out of the box
 
 Auth::routes();
 
