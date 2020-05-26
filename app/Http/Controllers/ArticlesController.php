@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Tag;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 /**
  * Class ArticlesController
@@ -14,6 +15,18 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ArticlesController extends Controller
 {
+    public function form()
+    {
+        return view('captcha');
+    }
+
+    public function storemore(Request $request)
+    {
+        $this->validate($request, [
+            'g-recaptcha-response' => 'required|captcha'
+        ]);
+        return $request->all();
+    }
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

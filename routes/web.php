@@ -21,26 +21,29 @@ use App\Article;
 //
 //    return new \App\Example($container, $foo);
 //}); это все переносим в папку провадерс апп сервис провайдер
+Route::get('/form', 'ArticlesController@form');
+Route::post('/form', 'ArticlesController@storemore');
 Route::get('/posts/{post}', 'PostsController@show');
-Route::get('/', 'FruitController@index');
+
+//Route::get('/', 'FruitController@index');
 //Route::get('/', function(App\Example $example) {
 ////    $test = resolve(App\Example::class);
 ////    $test = app()->make(App\Example::class);
 //// две вышестоящие команды это ручное вытягивание класса но можно запихать класс в аргументы функции и ларка сама все это пропишет и вытянет
 //    ddd($example);
 //});
-//Route::get('/', function() {
-//    $user = App\User::first();
-//
-//    $post = $user->posts()->create([
-//        'title' => 'foo',
-//        'body' => 'lorem ipsum'
-//    ]);
-//
-//
-//
-//    return view('welcome');
-//});
+Route::get('/', function() {
+    $user = App\User::first();
+
+    $post = $user->posts()->create([
+        'title' => 'foo',
+        'body' => 'lorem ipsum'
+    ]);
+
+
+
+    return view('welcome');
+});
 Route::get('/about', function() {
     return view('about', [
         'articles' => Article::take(2)->latest()->get()
