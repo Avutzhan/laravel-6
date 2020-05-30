@@ -6,13 +6,15 @@ namespace App;
 
 class Example
 {
-    protected $container;
+    protected $apiKey;
 
-    protected $foo;
-
-    public function __construct(Container $container, $foo)
+    public function __construct($apiKey)
     {
-        $this->container = $container;
-        $this->foo = $foo;
+        $this->apiKey = $apiKey;
+    }
+
+    public function handle()
+    {
+        die('its works');
     }
 }
