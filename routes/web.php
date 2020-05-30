@@ -33,16 +33,31 @@ Route::get('/posts/{post}', 'PostsController@show');
 //    ddd($example);
 //});
 Route::get('/', function() {
-    $user = App\User::first();
+//    $user = App\User::first();
+//
+//    $post = $user->posts()->create([
+//        'title' => 'foo',
+//        'body' => 'lorem ipsum'
+//    ]);
 
-    $post = $user->posts()->create([
-        'title' => 'foo',
-        'body' => 'lorem ipsum'
-    ]);
+    \Illuminate\Support\Facades\Cache::remember('foo', 60, function () {
+        return 'foobar';
+    });
 
+    return \Illuminate\Support\Facades\Cache::get('foo');
 
+//return \Illuminate\Support\Facades\File::get(public_path('index.php'));
+//return request('name');
+//return \Illuminate\Support\Facades\Request::input('name');
+//    return view('welcome');
+//    return \Illuminate\Support\Facades\View::make('welcome');
 
-    return view('welcome');
+    //in tinker
+    //app()->bind('key', function () { return 'here you go';});
+    //resolve('key');
+    //resolve('request');
+    //File::get(public_path('index.php'));
+    //resolve('files');
 });
 Route::get('/about', function() {
     return view('about', [
