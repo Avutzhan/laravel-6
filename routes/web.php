@@ -18,7 +18,7 @@ use App\Article;
 //app()->bind('App\Example', function( ) {
 //    $container = new \App\Container();
 //    $foo = 'foobar';
-//
+//  mailtrap
 //    return new \App\Example($container, $foo);
 //}); это все переносим в папку провадерс апп сервис провайдер
 Route::get('/form', 'ArticlesController@form');
