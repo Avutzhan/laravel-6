@@ -6,6 +6,8 @@ use App\Article;
 use App\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use function foo\func;
 
 /**
  * Class ArticlesController
@@ -15,6 +17,23 @@ use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
+    public function sendmail()
+    {
+        return view('sendmail');
+    }
+
+    public function storeemail()
+    {
+        request()->validate(['email' => 'required|email']);
+
+        Mail::raw('it works', function ($message) {
+            $message->to(request('email'))
+                ->subject('hello there');
+        });
+
+        return redirect('/sendmail')->with('message', 'email send');
+    }
+
     public function form()
     {
         return view('captcha');

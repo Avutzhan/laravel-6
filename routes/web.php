@@ -22,6 +22,8 @@ use App\Article;
 //    return new \App\Example($container, $foo);
 //}); это все переносим в папку провадерс апп сервис провайдер
 Route::get('/form', 'ArticlesController@form');
+Route::get('/sendmail', 'ArticlesController@sendmail');
+Route::post('/sendmail', 'ArticlesController@storeemail');
 Route::post('/form', 'ArticlesController@storemore');
 Route::get('/posts/{post}', 'PostsController@show');
 
