@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Mail\ContactMe;
 use App\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -26,10 +27,8 @@ class ArticlesController extends Controller
     {
         request()->validate(['email' => 'required|email']);
 
-        Mail::raw('it works', function ($message) {
-            $message->to(request('email'))
-                ->subject('hello there');
-        });
+        Mail::to(request('email'))
+            ->send(new ContactMe('shirts'));
 
         return redirect('/sendmail')->with('message', 'email send');
     }
