@@ -7,20 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ContactMe extends Mailable
+class Contct extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $topic;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(string $topic)
+    public function __construct()
     {
-        $this->topic = $topic;
+        //
     }
 
     /**
@@ -30,7 +28,8 @@ class ContactMe extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.contact-me')
-            ->subject('more information ' . $this->topic);
+        return $this->markdown('emails.contact');
     }
 }
+//php artisan make:mail Contct --markdown=emails.contact
+//php artisan vendor:publish --tag=laravel-mail там есть настройки команды именно эта публикует только мейл
