@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Mail\ContactMe;
 use App\Mail\Contct;
+use App\Notifications\PaymentReceive;
 use App\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use function foo\func;
 
 /**
@@ -22,6 +24,18 @@ class ArticlesController extends Controller
     public function sendmail()
     {
         return view('sendmail');
+    }
+
+    public function paymentCreate()
+    {
+        return view('payments.create');
+    }
+
+    public function paymentStore()
+    {
+        request()->user()->notify(new PaymentReceive());
+//        Notification::send(request()->user(), new PaymentReceive());
+        return redirect('/payments/create');
     }
 
     public function storeemail()
