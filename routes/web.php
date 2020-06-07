@@ -21,8 +21,11 @@ use App\Article;
 //  mailtrap
 //    return new \App\Example($container, $foo);
 //}); это все переносим в папку провадерс апп сервис провайдер
-Route::get('/payments/create', 'ArticlesController@paymentCreate');
+Route::get('/payments/create', 'ArticlesController@paymentCreate')->middleware('auth');
 Route::post('/payments', 'ArticlesController@paymentStore')->middleware('auth');
+Route::get('/notifications', 'ArticlesController@showNots')->middleware('auth');
+
+
 Route::get('/form', 'ArticlesController@form');
 Route::get('/sendmail', 'ArticlesController@sendmail');
 Route::post('/sendmail', 'ArticlesController@storeemail');

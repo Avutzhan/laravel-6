@@ -11,16 +11,16 @@ class PaymentReceive extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+    public $amount;
 
+    /**
+     * PaymentReceive constructor.
+     * @param $amount
+     */
+    public function __construct($amount)
+    {
+        $this->amount = $amount;
+    }
     /**
      * Get the notification's delivery channels.
      *
@@ -29,14 +29,12 @@ class PaymentReceive extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @param $notifiable
+     * @return MailMessage
      */
     public function toMail($notifiable)
     {
@@ -50,15 +48,13 @@ class PaymentReceive extends Notification
     }
 
     /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
+     * @param $notifiable
      * @return array
      */
     public function toArray($notifiable)
     {
         return [
-            //
+            'amount' => $this->amount
         ];
     }
 }

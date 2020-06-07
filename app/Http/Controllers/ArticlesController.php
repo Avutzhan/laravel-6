@@ -33,9 +33,27 @@ class ArticlesController extends Controller
 
     public function paymentStore()
     {
-        request()->user()->notify(new PaymentReceive());
+        request()->user()->notify(new PaymentReceive(900));
 //        Notification::send(request()->user(), new PaymentReceive());
         return redirect('/payments/create');
+    }
+
+    public function showNots()
+    {
+        //in tinker
+//        App\User::find(1)->notifications;
+        // App\User::find(1)->notifications[0]->notifiable; returns user was notificated
+//        $notifications = auth()->user()->notifications;
+//        $notifications = auth()->user()->unreadNotifications;
+//        $notifications->markAsRead();
+//        foreach ($notifications as $notification) {
+//            $notification->markAsRead();
+//        }
+
+        $notifications = tap(auth()->user()->unreadNotifications)->markAsRead();
+        return view('notifications.show', [
+            'notifications' => $notifications
+        ]);
     }
 
     public function storeemail()
