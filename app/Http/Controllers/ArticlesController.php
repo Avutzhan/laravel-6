@@ -7,6 +7,7 @@ use App\Events\ProductPurschased;
 use App\Mail\ContactMe;
 use App\Mail\Contct;
 use App\Notifications\PaymentReceive;
+use App\Reply;
 use App\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -109,7 +110,7 @@ class ArticlesController extends Controller
     {
         //show a single resource
 //        $article = Article::findOrFail($id);
-
+//        dd($article->replies);
         return view('articles.show', ['article' => $article]);
     }
 
@@ -120,6 +121,31 @@ class ArticlesController extends Controller
             'tags' => Tag::all()
         ]);
     }
+
+    /**
+     * @param Reply $reply
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function bestReplyStore(Reply $reply)
+    {
+        //authorize that the current user has permission to set the best reply
+        //for the conversation
+
+        //нужно потом поменять связь на belongs to ато я поставил many to many теперь когда вытягиваю артикль от ответа
+        //по идее у ответа всегда должен быть один артикль а тут многие ко многим короче изза этого приходится first использовать
+        //update-article
+        $this->authorize('update', $reply->articles->first());
+
+        //then set it
+        $reply->articles->first()->setBestReply($reply);
+
+//        $reply->articles->first()->best_reply_id = $reply->id;
+//        $reply->articles->first()->save();
+        //redirect back
+        return back();
+    }
+
 
     public function store()
     {

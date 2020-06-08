@@ -18,6 +18,7 @@ class CreateArticlesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->text('excerpt');
+            $table->unsignedBigInteger('best_reply_id')->nullable();
             $table->text('body');
             $table->timestamps();
 

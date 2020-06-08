@@ -71,11 +71,16 @@ Route::get('/about', function() {
         'articles' => Article::take(2)->latest()->get()
     ]);
 });
+//article index
 Route::get('/articles', 'ArticlesController@index')->name('articles.index');
 Route::post('/articles', 'ArticlesController@store');
 
 Route::get('/articles/create', 'ArticlesController@create');
+//article show
 Route::get('/articles/{article}', 'ArticlesController@show')->name('articles.show');
+// if you cant you standart method naming you must create new controller and you standart method naming im doing wrong bcz im hurring
+Route::post('/best-replies/{reply}', 'ArticlesController@bestReplyStore');
+
 Route::get('/articles/{article}/edit', 'ArticlesController@edit');
 Route::put('/articles/{article}', 'ArticlesController@update');
 
