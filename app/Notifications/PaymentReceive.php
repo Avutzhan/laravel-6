@@ -5,6 +5,7 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\NexmoMessage;
 use Illuminate\Notifications\Notification;
 
 class PaymentReceive extends Notification
@@ -29,7 +30,7 @@ class PaymentReceive extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', 'nexmo'];
     }
 
     /**
@@ -45,6 +46,16 @@ class PaymentReceive extends Notification
                     ->line('Lore ipsum amted dolot.')
                     ->action('Submit', url('/'))
                     ->line('Thanks');
+    }
+
+    /**
+     * @param $notifiable
+     * @return mixed
+     */
+    public function toNexmo($notifiable)
+    {
+        return (new NexmoMessage)
+            ->content('Test LAracasts sms sending');
     }
 
     /**

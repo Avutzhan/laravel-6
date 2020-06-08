@@ -33,6 +33,16 @@ class ArticlesController extends Controller
 
     public function paymentStore()
     {
+
+        $basic  = new \Nexmo\Client\Credentials\Basic('c35e4893', 'V0vltrDtlVQPvthA');
+        $client = new \Nexmo\Client($basic);
+
+        $message = $client->message()->send([
+            'to' => '77751081869',
+            'from' => 'Vonage APIs',
+            'text' => 'Hello from Vonage SMS API'
+        ]);
+
         request()->user()->notify(new PaymentReceive(900));
 //        Notification::send(request()->user(), new PaymentReceive());
         return redirect('/payments/create');
