@@ -77,7 +77,7 @@ Route::post('/articles', 'ArticlesController@store');
 
 Route::get('/articles/create', 'ArticlesController@create');
 //article show
-Route::get('/articles/{article}', 'ArticlesController@show')->name('articles.show');
+Route::get('/articles/{article}', 'ArticlesController@show')->name('articles.show')->middleware('can:view,article');
 // if you cant you standart method naming you must create new controller and you standart method naming im doing wrong bcz im hurring
 Route::post('/best-replies/{reply}', 'ArticlesController@bestReplyStore');
 

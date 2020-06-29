@@ -108,6 +108,7 @@ class ArticlesController extends Controller
      */
     public function show(Article $article)
     {
+//        $this->authorize('view', $article);
         //show a single resource
 //        $article = Article::findOrFail($id);
 //        dd($article->replies);
