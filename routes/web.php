@@ -10,7 +10,9 @@ use App\Article;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+
 */
+//auth()->loginUsingId(1);
 //app()->bind('example', function( ) {
 //
 //    return new \App\Example();
@@ -47,16 +49,16 @@ Route::get('/', function() {
 //        'body' => 'lorem ipsum'
 //    ]);
 
-    \Illuminate\Support\Facades\Cache::remember('foo', 60, function () {
-        return 'foobar';
-    });
+//    \Illuminate\Support\Facades\Cache::remember('foo', 60, function () {
+//        return 'foobar';
+//    });
 
-    return \Illuminate\Support\Facades\Cache::get('foo');
+//    return \Illuminate\Support\Facades\Cache::get('foo');
 
 //return \Illuminate\Support\Facades\File::get(public_path('index.php'));
 //return request('name');
 //return \Illuminate\Support\Facades\Request::input('name');
-//    return view('welcome');
+    return view('welcome');
 //    return \Illuminate\Support\Facades\View::make('welcome');
 
     //in tinker
@@ -113,6 +115,9 @@ Route::get('/logout', function () {
 
     return 'You are now logged out';
 });
+Route::get('/reports', function () {
+    return 'Secret reports';
+})->middleware('can:view_reports');
 
 //<img src="http://laravel-6.local/logout" alt=""> attacker
 //<form action="http://laravel-6.local/logout" method="POST">
@@ -124,3 +129,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')
     ->name('home')->middleware('auth');
+
+
+//roles
+//users
+//john => moderator, sally => manager, frank => owner
+//moderator => edit form,
+//owner => view financial reports

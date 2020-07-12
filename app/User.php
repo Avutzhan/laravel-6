@@ -49,7 +49,35 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->hasMany(Projects::class);
+        return $this->hasMany(Project::class);
+    }
+
+    //if you want to grab all roles of user like this #user->roles
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+    //if you want to assign role to user you must do this
+    //$user->roles()->save($role);
+    //but we can do more practical and convenient
+    //$user->assignRole();
+    //
+    public function assignRole($role)
+    {
+        if (is_string($role)) {
+            $role = Role::whereName($role)->firstOrFail();
+        }
+        $this->roles()->sync($role, false);
+        //there was save but this create an error with dublicate records
+        //to avoid dublicate error you can add sync
+        //so records will replace with new one and old will be dropped
+        //if you dont want to drop records just add false
+    }
+
+    public function abilities()
+    {
+        return $this->roles->map->abilities->flatten()->pluck('name')->unique();
+
     }
 
 //    public function relationships()
@@ -82,3 +110,8 @@ class User extends Authenticatable
     }
 }
 
+//if you want to grab abilities throgh user do this
+//$user->roles->map->abilities;
+//$user->roles->map->abilities->flatten();
+//$user->roles->map->abilities->flatten()->pluck('name');
+//$user->roles->map->abilities->flatten()->pluck('name')->unique();
