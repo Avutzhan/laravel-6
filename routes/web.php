@@ -12,6 +12,8 @@ use App\Article;
 |
 
 */
+
+Route::get('/track/{id}', 'TrackingController@track');
 //auth()->loginUsingId(1);
 //app()->bind('example', function( ) {
 //

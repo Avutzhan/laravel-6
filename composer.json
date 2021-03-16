@@ -16,7 +16,8 @@
         "laravel/nexmo-notification-channel": "^2.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.2",
-        "nexmo/client": "^2.0"
+        "nexmo/client": "^2.0",
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^10.2"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
