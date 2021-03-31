@@ -33,6 +33,7 @@ class CrmIntegrationController extends Controller
         $contact['COMPANY_ID'] = $this->addCompany($contact);
         $contact['CONTACT_ID'] = $this->addContact($contact);
         $contact['DEAL_ID'] = $this->addDeal($contact);
+        if($contact['DESCRIPTION'] != '') $this->addMessage($contact);
 
     }
 
@@ -72,8 +73,8 @@ class CrmIntegrationController extends Controller
     }
 
     protected function addContact($contact) {
-//        $check = $this->checkContact($contact);
-//        if($check['total'] != 0) return $check['result'][0]['ID'];
+        $check = $this->checkContact($contact);
+        if($check['total'] != 0) return $check['result'][0]['ID'];
         $contactData = $this->sendDataToBitrix('crm.contact.add', [
             'fields' => [
                 'NAME' => $contact['NAME'],
@@ -90,8 +91,8 @@ class CrmIntegrationController extends Controller
     }
 
     protected function addCompany($contact) {
-//        $check = checkCompany($contact);
-//        if($check['total'] != 0) return $check['result'][0]['ID'];
+        $check = $this->checkCompany($contact);
+        if($check['total'] != 0) return $check['result'][0]['ID'];
         $companyData = $this->sendDataToBitrix('crm.company.add', [
             'fields' => [
                 'TITLE' => $contact['COMPANY'],
@@ -110,5 +111,26 @@ class CrmIntegrationController extends Controller
         return $list;
     }
 
+    protected function checkCompany($contact){
+        $list = $this->sendDataToBitrix('crm.company.list', [
+            'filter' => [ 'TITLE' =>  $contact['COMPANY']],
+            'select' => [ 'ID'],
+        ]);
+        return $list;
+    }
+
+    protected function addMessage($contact) {
+        $messageData = $this->sendDataToBitrix('crm.livefeedmessage.add', [
+            'fields' => [
+                'MESSAGE' => $contact['DESCRIPTION'],
+                'POST_TITLE' => 'Сообщение с формы сайта',
+                'ENTITYTYPEID' => 2,
+                'ENTITYID' => $contact['DEAL_ID'],
+            ], 'params' => [
+                'REGISTER_SONET_EVENT' => 'Y'
+            ]
+        ]);
+        return $messageData['result'];
+    }
 
 }
