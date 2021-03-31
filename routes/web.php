@@ -144,8 +144,6 @@ Route::get('/add-contact-form', function() {
 });
 
 Route::post('/add-contact', function() {
-    $method = "crm.contact.add";
-
     $name 		    = isset($_POST['name']) ? $_POST['name'] : '';
     $phone 		    = isset($_POST['phone']) ? $_POST['phone'] : '';
     $description    = isset($_POST['description']) ? $_POST['description'] : '';
@@ -164,7 +162,7 @@ Route::post('/add-contact', function() {
     );
 
     function sendDataToBitrix($method, $data) {
-        $queryUrl = "https://b24-nnei4t.bitrix24.ru/rest/1/c34a1uh095ffg400/" . $method ;
+        $queryUrl =  "https://bitrix.vrcode.kz/rest/3/haxh8qodoix8bei7/" . $method ;
         $queryData = http_build_query($data);
 
         $curl = curl_init();
@@ -180,6 +178,20 @@ Route::post('/add-contact', function() {
         $result = curl_exec($curl);
         curl_close($curl);
         return json_decode($result, 1);
+    }
+
+    function addDeal($contact) {
+        $dealData = sendDataToBitrix('crm.deal.add', [
+            'fields' => [
+                'TITLE' => 'Test Заявка с сайта',
+                'STAGE_ID' => 'NEW',
+                'CONTACT_ID' => $contact['CONTACT_ID'],
+            ], 'params' => [
+                'REGISTER_SONET_EVENT' => 'Y'
+            ]
+        ]);
+
+        return $dealData['result'];
     }
 
     function addContact($contact) {
@@ -208,6 +220,7 @@ Route::post('/add-contact', function() {
         return $list;
     }
 
-    addContact($contact);
+//    addContact($contact);
+    addDeal($contact);
 
 })->name('crm.add.contact');
