@@ -220,7 +220,20 @@ Route::post('/add-contact', function() {
         return $list;
     }
 
-//    addContact($contact);
-    addDeal($contact);
+    function addCompany($contact) {
+//        $check = checkCompany($contact);
+//        if($check['total'] != 0) return $check['result'][0]['ID'];
+        $companyData = sendDataToBitrix('crm.company.add', [
+            'fields' => [
+                'TITLE' => "Test company",
+            ], 'params' => [
+                'REGISTER_SONET_EVENT' => 'Y'
+            ]
+        ]);
+        return $companyData['result'];
+    }
 
+//    addContact($contact);
+//    addDeal($contact);
+    addCompany($contact);
 })->name('crm.add.contact');
