@@ -13,11 +13,14 @@ class CrmIntegrationController extends Controller
 
     public function integrateData()
     {
+//        dd(request()->all());
         $name 		    = isset($_POST['name']) ? $_POST['name'] : '';
         $phone 		    = isset($_POST['phone']) ? $_POST['phone'] : '';
         $description      = isset($_POST['description']) ? $_POST['description'] : '';
         $email 			= isset($_POST['email']) ? $_POST['email'] : '';
         $company          = isset($_POST['company']) ? $_POST['company'] : '';
+
+        $arProduct = $_POST['product']['price'];
 
         $contact = array(
             'NAME' => $name,
@@ -28,12 +31,20 @@ class CrmIntegrationController extends Controller
             'CONTACT_ID' => 0,
             'COMPANY_ID' => 0,
             'DEAL_ID' => 0,
+            'PRICE' => $arProduct,
         );
 
-        $contact['COMPANY_ID'] = $this->addCompany($contact);
+        //check if contact exists if exist return id if not add and return id
         $contact['CONTACT_ID'] = $this->addContact($contact);
+
+        //check / add product
+        $contact['PRODUCT_ID'] = $this->addProduct($contact);
+
+        //add deal
         $contact['DEAL_ID'] = $this->addDeal($contact);
-        if($contact['DESCRIPTION'] != '') $this->addMessage($contact);
+
+        //add product to deal
+        $this->addProductToDeal($contact);
 
     }
 
@@ -90,17 +101,36 @@ class CrmIntegrationController extends Controller
         return $contactData['result'];
     }
 
-    protected function addCompany($contact) {
-        $check = $this->checkCompany($contact);
+    protected function addProduct($contact) {
+
+        $check = $this->checkProduct($contact);
         if($check['total'] != 0) return $check['result'][0]['ID'];
-        $companyData = $this->sendDataToBitrix('crm.company.add', [
+
+        $contactData = $this->sendDataToBitrix('crm.product.add', [
             'fields' => [
-                'TITLE' => $contact['COMPANY'],
-            ], 'params' => [
-                'REGISTER_SONET_EVENT' => 'Y'
+                "NAME" => "1С-Битрикс: Управление сайтом - Старт",
+                "CURRENCY_ID" => "RUB",
+                "PRICE" => 4900,
+                "SORT" => 500
             ]
         ]);
-        return $companyData['result'];
+
+        return $contactData['result'];
+    }
+
+    protected function addProductToDeal($contact) {
+        $contactData = $this->sendDataToBitrix('crm.deal.productrows.set', [
+            'id' => $contact['DEAL_ID'],
+            'rows' => [
+                [//product with auto calc tax
+                    'PRODUCT_ID' => $contact['PRODUCT_ID'],
+                    'PRICE_EXCLUSIVE' => $contact['PRICE'],
+                    'QUANTITY' => 1
+                ],
+            ]
+        ]);
+
+        return $contactData['result'];
     }
 
     protected function checkContact($contact){
@@ -111,26 +141,13 @@ class CrmIntegrationController extends Controller
         return $list;
     }
 
-    protected function checkCompany($contact){
-        $list = $this->sendDataToBitrix('crm.company.list', [
-            'filter' => [ 'TITLE' =>  $contact['COMPANY']],
+    protected function checkProduct($contact){
+        $list = $this->sendDataToBitrix('crm.product.list', [
+            'filter' => [ 'NAME' =>  "1С-Битрикс: Управление сайтом - Старт"],
             'select' => [ 'ID'],
         ]);
         return $list;
     }
 
-    protected function addMessage($contact) {
-        $messageData = $this->sendDataToBitrix('crm.livefeedmessage.add', [
-            'fields' => [
-                'MESSAGE' => $contact['DESCRIPTION'],
-                'POST_TITLE' => 'Сообщение с формы сайта',
-                'ENTITYTYPEID' => 2,
-                'ENTITYID' => $contact['DEAL_ID'],
-            ], 'params' => [
-                'REGISTER_SONET_EVENT' => 'Y'
-            ]
-        ]);
-        return $messageData['result'];
-    }
 
 }
