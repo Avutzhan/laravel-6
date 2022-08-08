@@ -18,6 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //add comment
-//add comment 2
-//add comment 3
-//add comment 4
+
